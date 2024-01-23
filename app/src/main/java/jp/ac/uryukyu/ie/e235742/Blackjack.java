@@ -6,10 +6,10 @@ import java.util.Scanner;
 
 
 public class Blackjack {
-    private int playerHp = 100;
-    private int playerAttack = 50;
-    private int dealerHp = 100;
-    private int dealerAttack = 50;
+    private int playerHp = 100; //プレイヤーのHP
+    private int playerAttack = 50; //プレイヤーの攻撃力
+    private int dealerHp = 100; //ディーラーのHP
+    private int dealerAttack = 50; //ディーラーの攻撃力
     private ArrayList<Integer> deck; //deckのリスト
     private Scanner scanner;
 
@@ -18,11 +18,15 @@ public class Blackjack {
         this.scanner = new Scanner(System.in);
     }
 
-    private void MakeDeck() {
+    void MakeDeck() {
         for (int n = 1; n <= 13; n++) {  //デッキを作る
             deck.add(n);
         }
         Collections.shuffle(deck); //シャッフルする
+    }
+
+    public ArrayList<Integer> getDeck() {
+        return deck;
     }
 
     private void playGame() {
@@ -48,9 +52,9 @@ public class Blackjack {
         deck.remove(0);
         int dealer_total = dealer_card1;
         dealer_total = (dealer_card1 > 10 ? 10 : dealer_card1); //total計算 
-        while(dealer_total <= 16){ //
+        while(dealer_total <= 16){ //ealer_totalが17以上になるまで引く
             int dealercard = deck.get(0);
-            dealer_total +=  + (dealercard > 10 ? 10 : dealercard);
+            dealer_total += (dealercard > 10 ? 10 : dealercard); //引いた数字を足す
     }
 
     while (total < 21) {
@@ -68,16 +72,15 @@ public class Blackjack {
             // Stand（何もせずに終了）
             break;
         } else {
-            System.out.println("無効な入力です。Hit（h）かStand（s）を選んでください。");
+            System.out.println("無効な入力です。Hit（h）かStand（s）を選んでください。"); //h,s以外が入力されたとき
         }
     }
 
-    Judge(total, dealer_total);
+    Judge(total, dealer_total); //Blackjackの勝敗を判断
     System.out.println("ディーラーのポイントは [" + dealer_total + "] でした");
     System.out.println("");
 
-    //Attackturn(total, dealer_total);
-    Finish(playerHp, dealerHp);
+    Finish(playerHp, dealerHp); //どちらかが死んだとき
 }
 }
 
@@ -121,9 +124,9 @@ public class Blackjack {
 
     void Finish(int playerHp, int dealerHp){
         if (playerHp <= 0){
-            System.out.println("You die.");
+            System.out.println("- You die. -");
         }else if (dealerHp <= 0){
-            System.out.println("Dealer is dead.");
+            System.out.println("- Dealer is dead. -");
         }
     }
 
